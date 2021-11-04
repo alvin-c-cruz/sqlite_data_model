@@ -3,6 +3,10 @@ from datetime import date
 
 @dataclass
 class sqliteDataModel:
+	#  This class has two default fields
+	#  1) db is a sqlite3 database and should be passed in upon creation of the class
+	#  2) table_name is a string. If no value is assigned to table_name, the class name will be used with suffix tbl_
+	
 	db: any = field(repr=False)
 	table_name: str = field(repr=False,default=None)
 
