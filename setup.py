@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-    name='simple_data_model',
-    packages = ['simple_data_model'],
+    name='sqlite_data_model',
+    packages = ['sqlite_data_model'],
     version = '0.1',
     license = 'mit',
     description='A class using the built-in @dataclass decorator in conjunction with sqlite3.',

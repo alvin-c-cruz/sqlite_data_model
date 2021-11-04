@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import date
 
 @dataclass
-class SimpleModel:
+class sqliteDataModel:
 	db: any = field(repr=False)
 	table_name: str = field(repr=False,default=None)
 
