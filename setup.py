@@ -8,8 +8,8 @@ setup(
     description='A class using the built-in @dataclass decorator in conjunction with sqlite3.',
     author='Alvin C. Cruz',
     author_email='alvinccruz12@gmail.com',
-    url='https://github.com/alvin-c-cruz/data_model',
-    download_url='https://github.com/alvin-c-cruz/data_model/archive/refs/tags/v_01.tar.gz',
+    url='https://github.com/alvin-c-cruz/sqlite_data_model',
+    download_url='https://github.com/alvin-c-cruz/sqlite_data_model/archive/refs/tags/v_01.tar.gz',
     keywords=['dataclass'],
     install_requires=[],
     classifiers=[
