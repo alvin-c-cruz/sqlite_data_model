@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import date
+import sqlite3
 
 @dataclass
 class sqliteDataModel:
@@ -8,9 +9,12 @@ class sqliteDataModel:
 	#  2) table_name is a string. If no value is assigned to table_name, the class name will be used with suffix tbl_
 	
 	db: any = field(repr=False)
+	id: int = None
 	table_name: str = field(repr=False,default=None)
 
 	def __post_init__(self):
+		self.db.row_factory =sqlite3.Row
+
 		class_name = str(self.__class__)
 		loc = class_name.rfind('.') + 1
 		length = len(class_name) - 2
@@ -53,9 +57,8 @@ class sqliteDataModel:
 		for field in self._fields():
 			name = field.get('name')
 			datatype = field.get('datatype')
-			primary_key = field.get('primary_key')
 
-			if primary_key:
+			if name == 'id':
 				fields.append(f'{name} {datatype} PRIMARY KEY')
 			else:
 				fields.append(f'{name} {datatype}')
@@ -105,7 +108,10 @@ class sqliteDataModel:
 		record = self.db.execute(f'SELECT * FROM {self.table_name} WHERE {", ".join(clause)};', tuple(filter.values())).fetchone()
 
 		for field in self._fields():
-			setattr(self, field['name'], record[field['name']])
+			if record:
+				setattr(self, field['name'], record[field['name']])
+			else:
+				setattr(self, field['name'], None)
 
 
 	def all(self, **filter):
