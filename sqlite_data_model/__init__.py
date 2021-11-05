@@ -80,16 +80,16 @@ class sqliteDataModel:
 	@property
 	def save(self):
 		if self.id:
-			fields = [f'{field["name"]}=?' for field in self.fields()]
-			values = [getattr(self, field['name']) for field in self.fields()]
+			fields = [f'{field["name"]}=?' for field in self._fields()]
+			values = [getattr(self, field['name']) for field in self._fields()]
 
 			self.db.execute(f"UPDATE {self.table_name} set {', '.join(fields)} WHERE id={self.id};", values)
 
 		else:
-			fields = [field['name'] for field in self.fields() if field['name'] != 'id']
-			field_values = ["?" for field in self.fields() if field['name'] != 'id']
+			fields = [field['name'] for field in self._fields() if field['name'] != 'id']
+			field_values = ["?" for field in self._fields() if field['name'] != 'id']
 			values = []
-			for field in self.fields():
+			for field in self._fields():
 				if field['name'] == 'id': continue
 				values.append(getattr(self, field['name']))	
 
@@ -104,7 +104,7 @@ class sqliteDataModel:
 		clause = [f'{key}=?' for key in filter]
 		record = self.db.execute(f'SELECT * FROM {self.table_name} WHERE {", ".join(clause)};', tuple(filter.values())).fetchone()
 
-		for field in self.fields():
+		for field in self._fields():
 			setattr(self, field['name'], record[field['name']])
 
 
